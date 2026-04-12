@@ -31,6 +31,35 @@ public class Main {
         System.out.println(player);
 
         sc.close();
+         // BATTLE
+        Enemy enemy = new Enemy();
+        BattleContext battle = new BattleContext();
+
+        battle.setState(new IdleState());
+        battle.work(player, enemy);
+
+        battle.setState(new AttackState());
+        battle.work(player, enemy);
+
+        battle.setState(new DefenseState());
+        battle.work(player, enemy);
+
+        if(enemy.health < 30) {
+            battle.setState(new SpecialMoveState());
+            battle.work(player, enemy);
+        }
+
+        if(player.health <= 0) {
+            battle.setState(new DeadState());
+            battle.work(player, enemy);
+        }
+
+        player.gainXP(50);
+
+        System.out.println("\nFinal Stats:");
+        System.out.println(player);
+    }
+}
     }
 
 }
